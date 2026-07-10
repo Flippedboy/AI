@@ -1,0 +1,334 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "type": "app_init",
+      "name": "应用初始化任务",
+      "status": "completed",
+      "subtasks": [
+        "初始化布局导航文件Layout",
+        "初始化主题文件",
+        "初始化占位页面和路由"
+      ],
+      "requirements": [],
+      "write_scope": [
+        "client/src/components/Layout.tsx",
+        "client/src/tailwind-theme.css",
+        "client/src/app.tsx"
+      ],
+      "read_scope": [],
+      "acceptance": "全局Layout、主题配置、占位页面和基础路由正常初始化，无报错",
+      "dependencies": [],
+      "beginTime": 1783251077739,
+      "endTime": 1783251311013
+    },
+    {
+      "id": 2,
+      "name": "代码架构设计",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 coding-guide、animation-skill 技能文档",
+        "规划前端页面目录结构：pages/chat、pages/knowledge、pages/dashboard、pages/report、pages/settings，公共组件与hooks目录划分",
+        "统一设计路由与导航结构：确认首页/knowledge/dashboard/report/settings 5个路由，配置Layout侧边栏导航",
+        "规划服务端业务模块边界：chat、knowledge、dashboard、report、system 5个独立模块",
+        "规划shared目录前后端共享类型：定义所有API请求响应类型、数据实体类型",
+        "明确并行开发修改边界：各业务模块仅修改自身对应前后端目录，共享文件仅本任务修改",
+        "完成全局路由骨架与Layout基础实现，所有页面路由挂载占位组件可运行"
+      ],
+      "requirements": [],
+      "write_scope": [
+        "client/src/app.tsx",
+        "client/src/components/Layout.tsx",
+        "client/src/pages/**/index.tsx",
+        "server/app.module.ts",
+        "shared/**/*.ts"
+      ],
+      "read_scope": [
+        ".agent/skills/steering/nestjs-react-fullstack/coding-guide/SKILL.md",
+        ".agent/skills/animation-skill/SKILL.md"
+      ],
+      "acceptance": "前后端目录结构、路由、共享类型、模块边界全部规划完成，所有页面路由可访问且无404",
+      "dependencies": [
+        1
+      ],
+      "beginTime": 1783251311179,
+      "endTime": 1783251638566
+    },
+    {
+      "id": 3,
+      "name": "数据库服务创建",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 miaoda-sql 技能文档",
+        "创建 chat_message、knowledge_document、system_config、user_report 四张业务表",
+        "插入必要的Mock测试数据",
+        "在shared目录编写对应的数据实体类型定义"
+      ],
+      "requirements": [],
+      "write_scope": [
+        "server/database/schema.ts",
+        "shared/api.interface.ts"
+      ],
+      "read_scope": [
+        ".agent/skills/miaoda-sql/SKILL.md",
+        "server/database/schema.ts"
+      ],
+      "acceptance": "四张业务表创建完成，Mock数据可正常查询，实体类型定义同步到shared目录",
+      "dependencies": [
+        2
+      ],
+      "beginTime": 1783251638731,
+      "endTime": 1783251846911
+    },
+    {
+      "id": 4,
+      "name": "AI插件开发",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 plugin-guide 技能文档",
+        "创建「智能对话回复」插件实例（基于ai-text-generate，流式输出）",
+        "创建「文档内容解析」插件实例（基于ai-doc-parser）",
+        "创建「报告内容生成」插件实例（基于ai-text-generate）",
+        "创建「知识库结构化提取」插件实例（基于ai-text-to-json）",
+        "逐个调用get_plugin_ai_json获取各插件运行时Schema，输出Schema摘录卡",
+        "生成各插件调用代码骨架，集成到对应Service/前端工具文件"
+      ],
+      "requirements": [],
+      "write_scope": [
+        "server/capabilities/*.json",
+        "server/common/utils/capability.ts",
+        "client/src/utils/capability.ts"
+      ],
+      "read_scope": [
+        ".agent/skills/steering/nestjs-react-fullstack/plugin-guide/SKILL.md"
+      ],
+      "acceptance": "4个插件实例全部创建完成，调用代码生成并可正常调用插件获取返回结果",
+      "dependencies": [
+        3
+      ],
+      "beginTime": 1783251847075,
+      "endTime": 1783252303435
+    },
+    {
+      "id": 5,
+      "name": "智能对话模块开发（含前后端）",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 animation-skill 技能文档",
+        "检查shared目录下对话相关接口类型定义",
+        "实现服务端chat模块Service层：对话历史CRUD、快捷问题查询",
+        "实现服务端chat模块Controller层：对应REST API接口",
+        "配置当前页面路由和导航结构，检查与Layout约束一致性",
+        "实现前端智能对话页面：对话流气泡、流式回复动画、快捷问题按钮、输入框",
+        "集成「智能对话回复」插件，实现流式回复与加载动画效果",
+        "调用后端真实接口实现历史消息加载、消息持久化",
+        "代码级自查：前后端类型一致、接口入参出参符合spec"
+      ],
+      "requirements": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "1.4"
+      ],
+      "write_scope": [
+        "server/modules/chat/**",
+        "client/src/pages/chat/**",
+        "client/src/api/chat.ts"
+      ],
+      "read_scope": [
+        "shared/api.interface.ts",
+        "client/src/utils/capability.ts"
+      ],
+      "acceptance": "智能对话页面可正常发送消息，AI流式回复展示正确，消息历史可持久化查询，快捷提问功能可用",
+      "dependencies": [
+        4
+      ],
+      "beginTime": 1783252303603,
+      "endTime": 1783252659128
+    },
+    {
+      "id": 6,
+      "name": "知识库管理模块开发（含前后端）",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 animation-skill、client-builtins-file-storage-service 技能文档",
+        "检查shared目录下知识库相关接口类型定义",
+        "实现服务端knowledge模块Service层：文档CRUD、向量库状态查询、插件调用编排",
+        "实现服务端knowledge模块Controller层：对应REST API接口",
+        "配置当前页面路由和导航结构，检查与Layout约束一致性",
+        "实现前端知识库管理页面：文档上传、文档卡片列表、搜索、删除确认弹窗、向量库状态条",
+        "集成「文档内容解析」和「知识库结构化提取」插件，实现文档上传解析与索引流程",
+        "调用后端真实接口实现文档列表查询、上传、删除功能",
+        "代码级自查：前后端类型一致、接口入参出参符合spec"
+      ],
+      "requirements": [
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.4"
+      ],
+      "write_scope": [
+        "server/modules/knowledge/**",
+        "client/src/pages/knowledge/**",
+        "client/src/api/knowledge.ts"
+      ],
+      "read_scope": [
+        "shared/api.interface.ts",
+        "client/src/utils/capability.ts"
+      ],
+      "acceptance": "知识库页面可正常上传文档，解析索引状态实时展示，文档搜索、删除功能可用，向量库状态正确显示",
+      "dependencies": [
+        4
+      ],
+      "beginTime": 1783252303603,
+      "endTime": 1783252906773
+    },
+    {
+      "id": 7,
+      "name": "数据看板模块开发（含前后端）",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 charts-skill 技能文档",
+        "检查shared目录下看板相关接口类型定义",
+        "实现服务端dashboard模块Service层：统计指标计算、趋势数据查询、热门问题统计、知识库使用统计",
+        "实现服务端dashboard模块Controller层：对应REST API接口",
+        "配置当前页面路由和导航结构，检查与Layout约束一致性",
+        "实现前端数据看板页面：顶部指标卡、对话趋势折线图、热门问题柱状图、知识库使用饼图",
+        "集成ReactECharts组件实现数据可视化，添加数字滚动动画效果",
+        "调用后端真实接口实现所有统计数据加载",
+        "代码级自查：前后端类型一致、接口入参出参符合spec"
+      ],
+      "requirements": [
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4"
+      ],
+      "write_scope": [
+        "server/modules/dashboard/**",
+        "client/src/pages/dashboard/**",
+        "client/src/api/dashboard.ts"
+      ],
+      "read_scope": [
+        "shared/api.interface.ts",
+        ".agent/skills/charts-skill/SKILL.md"
+      ],
+      "acceptance": "数据看板页面所有统计指标、图表数据正常加载，动画效果正常，数据与后端一致",
+      "dependencies": [
+        4
+      ],
+      "beginTime": 1783252303603,
+      "endTime": 1783253319941
+    },
+    {
+      "id": 8,
+      "name": "使用报告模块开发（含前后端）",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 forms-skill 技能文档",
+        "检查shared目录下报告相关接口类型定义",
+        "实现服务端report模块Service层：报告生成、报告查询、导出功能，集成「报告内容生成」插件",
+        "实现服务端report模块Controller层：对应REST API接口",
+        "配置当前页面路由和导航结构，检查与Layout约束一致性",
+        "实现前端使用报告页面：用户/月份选择器、生成按钮、报告内容展示、导出按钮",
+        "实现报告生成加载动画、内容展示动效、导出功能",
+        "调用后端真实接口实现报告生成、查询、导出",
+        "代码级自查：前后端类型一致、接口入参出参符合spec"
+      ],
+      "requirements": [
+        "4.1",
+        "4.2",
+        "4.3",
+        "4.4"
+      ],
+      "write_scope": [
+        "server/modules/report/**",
+        "client/src/pages/report/**",
+        "client/src/api/report.ts"
+      ],
+      "read_scope": [
+        "shared/api.interface.ts",
+        "client/src/utils/capability.ts"
+      ],
+      "acceptance": "报告页面可选择用户和月份生成报告，报告内容正常展示，PDF/Excel导出功能可用，失败提示正常",
+      "dependencies": [
+        4
+      ],
+      "beginTime": 1783252303603,
+      "endTime": 1783253523278
+    },
+    {
+      "id": 9,
+      "name": "系统设置模块开发（含前后端）",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 forms-skill 技能文档",
+        "检查shared目录下系统配置相关接口类型定义",
+        "实现服务端system模块Service层：配置查询、配置保存",
+        "实现服务端system模块Controller层：对应REST API接口",
+        "配置当前页面路由和导航结构，检查与Layout约束一致性",
+        "实现前端系统设置页面：模型配置表单、知识库配置表单、界面设置（主题切换、字体大小）",
+        "实现主题切换平滑过渡动画、配置保存即时生效",
+        "调用后端真实接口实现配置查询与保存，界面配置保存在localStorage",
+        "代码级自查：前后端类型一致、接口入参出参符合spec"
+      ],
+      "requirements": [
+        "5.1",
+        "5.2",
+        "5.3",
+        "5.4"
+      ],
+      "write_scope": [
+        "server/modules/system/**",
+        "client/src/pages/settings/**",
+        "client/src/api/system.ts"
+      ],
+      "read_scope": [
+        "shared/api.interface.ts"
+      ],
+      "acceptance": "系统设置页面可修改并保存所有配置，主题切换流畅无闪烁，字体大小和主题配置刷新后保持生效",
+      "dependencies": [
+        4
+      ],
+      "beginTime": 1783252303603,
+      "endTime": 1783253699961
+    },
+    {
+      "id": 10,
+      "name": "验收测试",
+      "status": "completed",
+      "type": "normal",
+      "subtasks": [
+        "读取 testing-guide 技能文档",
+        "入口检查：确认应用入口智能对话页可正常访问，无白屏或404",
+        "核心验收目标1：智能对话功能 —— 发送消息后AI流式回复正确展示，快捷提问可用，消息历史可查询",
+        "核心验收目标2：知识库管理功能 —— 上传文档可正常解析并展示在列表，搜索和删除功能正常",
+        "核心验收目标3：全页面导航 —— 侧边栏可正常切换所有页面，各页面加载无报错",
+        "非核心降级范围：AI生成内容质量、PDF/Excel导出文件内容正确性、飞书集成类外部服务真实送达"
+      ],
+      "requirements": [],
+      "write_scope": [],
+      "read_scope": [
+        ".agent/skills/testing-guide/SKILL.md"
+      ],
+      "acceptance": "核心功能验收通过，无阻塞性问题",
+      "dependencies": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "beginTime": 1783253700173,
+      "endTime": 1783254095250
+    }
+  ]
+}

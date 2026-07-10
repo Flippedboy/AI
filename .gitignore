@@ -1,0 +1,43 @@
+﻿# 编译输出
+dist/
+build/
+*.tsbuildinfo
+
+# 依赖
+node_modules/
+.pnp
+.pnp.js
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 日志
+logs/
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 测试
+coverage/
+.nyc_output/
+
+# 临时
+.tmp/
+temp/

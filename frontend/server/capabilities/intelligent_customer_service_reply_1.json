@@ -1,0 +1,31 @@
+{
+  "id": "intelligent_customer_service_reply_1",
+  "pluginKey": "@official-plugins/ai-text-generate",
+  "pluginVersion": "1.0.17",
+  "name": "扫地机器人智能客服对话回复",
+  "description": "基于用户提问，生成扫地机器人相关的专业客服回答，包括故障排除、使用指导、配件更换、保养维护等内容。",
+  "icon": "",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "user_question": {
+        "type": "string",
+        "description": "用户提出的扫地机器人相关问题"
+      }
+    },
+    "required": [
+      "user_question"
+    ]
+  },
+  "formValue": {
+    "modelID": "87",
+    "modelParams": {
+      "temperature": 0.5,
+      "maxTokens": 8192
+    },
+    "prompt": "你是智扫通智能客服，专门回答扫地机器人相关问题，包括故障排除、使用指导、配件更换、保养维护等。回答要简洁专业，条理清晰。\n\n用户问题：{{input.user_question}}\n\n回答要求：\n1. 仅回答与扫地机器人相关的问题，对于无关问题请礼貌告知无法解答\n2. 回答内容准确专业，符合产品实际使用场景\n3. 语言简洁明了，避免复杂术语，便于用户理解\n4. 对于需要多步骤指导的问题，采用分点形式呈现\n5. 回答时保持友好、耐心的服务态度"
+  },
+  "createdAt": 1783251888952,
+  "updatedAt": 1783251888952,
+  "createdBy": 7587467520500567006
+}

@@ -1,0 +1,30 @@
+{
+  "id": "knowledge_base_doc_parser_1",
+  "pluginKey": "@official-plugins/ai-doc-parser",
+  "pluginVersion": "1.0.16",
+  "name": "知识库文档解析",
+  "description": "解析上传的知识库文档（PDF、DOCX、TXT、XLSX等格式），提取纯文本内容用于后续知识库索引",
+  "icon": "",
+  "paramsSchema": {
+    "type": "object",
+    "properties": {
+      "knowledge_base_file": {
+        "type": "array",
+        "format": "plugin-file-url",
+        "description": "待解析的知识库文档文件",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "knowledge_base_file"
+    ]
+  },
+  "formValue": {
+    "fileUrl": "{{input.knowledge_base_file}}"
+  },
+  "createdAt": 1783251915477,
+  "updatedAt": 1783251915477,
+  "createdBy": 7587467520500567006
+}
