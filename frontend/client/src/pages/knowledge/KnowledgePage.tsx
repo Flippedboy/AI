@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, Upload, Trash2, FileText, Database, Clock, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { logger } from '@lark-apaas/client-toolkit/logger';
+import { logger } from '@/utils/logger';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

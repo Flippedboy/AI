@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
-import { logger } from '@lark-apaas/client-toolkit/logger';
+import { logger } from '@/utils/logger';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';

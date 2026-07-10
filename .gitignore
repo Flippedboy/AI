@@ -41,3 +41,10 @@ coverage/
 # 临时
 .tmp/
 temp/
+
+# ChromaDB 本地数据
+chroma_db/
+backend/chroma_db/
+
+# Vite 缓存
+.vite/'

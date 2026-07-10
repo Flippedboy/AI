@@ -9,7 +9,7 @@ import {
   TrendingUp,
   TrendingDown,
 } from 'lucide-react';
-import { logger } from '@lark-apaas/client-toolkit/logger';
+import { logger } from '@/utils/logger';
 import { dashboard } from '@/api';
 import type {
   DashboardMetrics,

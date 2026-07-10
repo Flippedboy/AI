@@ -269,6 +269,33 @@ async def ai_chat(body: dict = Body(...)):
         },
     )
 
+
+# ---------------------------------------------------------------------------
+# API Routes - Chat Messages
+# ---------------------------------------------------------------------------
+@app.get("/api/chat-messages")
+async def chat_messages(sessionId: str = "", page: int = 1, pageSize: int = 50):
+    msgs = _chat_messages
+    if sessionId:
+        msgs = [m for m in msgs if m['sessionId'] == sessionId]
+    total = len(msgs)
+    start = (page - 1) * pageSize
+    items = msgs[start:start + pageSize]
+    return {"items": items, "total": total, "page": page, "pageSize": pageSize}
+
+@app.post("/api/chat-messages")
+async def create_chat_message(body: ChatMessageCreate):
+    msg = {
+        "id": uuid.uuid4().hex,
+        "sessionId": body.sessionId,
+        "content": body.content,
+        "type": body.type,
+        "isQuickQuestion": body.isQuickQuestion,
+        "responseTime": body.responseTime,
+        "createdAt": datetime.now().isoformat(),
+    }
+    _chat_messages.append(msg)
+    return {"id": msg["id"]}
 @app.get("/api/ai/quick-questions")
 async def quick_questions():
     return {"items": _quick_questions}

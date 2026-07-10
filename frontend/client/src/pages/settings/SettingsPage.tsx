@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Cpu, BookOpen, Palette, Save, Sun, Moon, Type } from 'lucide-react';
 import { toast } from 'sonner';
-import { logger } from '@lark-apaas/client-toolkit/logger';
+import { logger } from '@/utils/logger';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';

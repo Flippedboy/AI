@@ -5,3 +5,4 @@ export * as report from './report';
 export * as system from './system';
 
 export { logger, axiosForBackend } from '../utils/api_client';
+export { logger as appLogger } from '../utils/logger';
