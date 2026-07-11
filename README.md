@@ -14,7 +14,7 @@
 
 **基于 RAG 技术的扫地机器人智能客服系统**
 后端 Python FastAPI + LangChain + ChromaDB · 前端 React 19 + TypeScript + Vite 7
-大语言模型（通义千问 qwen3-max）赋能，实现从知识库到智能问答的完整闭环。
+大语言模型（通义千问 qwen3-max）赋能，使用ReAct思考模式自主对工具的调用，实现从知识库到智能问答的完整闭环。
 
 </div>
 
