@@ -2,6 +2,7 @@
   "name": "fullstack-nestjs-template",
   "version": "2.2.5",
   "private": true,
+  "type": "module",			
   "flags": {
     "supportBusinessUser": true,
     "supportScrollReveal": true,
