@@ -123,7 +123,7 @@ const ReportPage = () => {
   const content = currentReport?.content;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full max-w-5xl mx-auto">
       <div className="glass rounded-xl p-5 mb-6">
         <div className="flex flex-wrap items-end gap-4">
           <div className="flex flex-col gap-2">

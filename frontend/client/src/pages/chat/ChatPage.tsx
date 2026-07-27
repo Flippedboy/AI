@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Send, Bot, User, Loader2 } from 'lucide-react';
+import { Send, Bot, Loader2 } from 'lucide-react';
 import { logger } from '@/utils/logger';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { chat } from '@/api';
 import { streamChatReply } from '@/utils/capability';
 import type { ChatMessage, QuickQuestion } from '@shared/api.interface';
@@ -36,6 +34,14 @@ const ChatPage = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
+
+  // 自动调整输入框高度
+  useEffect(() => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    ta.style.height = 'auto';
+    ta.style.height = `${Math.min(ta.scrollHeight, 200)}px`;
+  }, [inputValue]);
 
   const loadMessages = async (sid: string) => {
     try {
@@ -150,44 +156,74 @@ const ChatPage = () => {
     handleSend(question, true);
   };
 
-  return (
-    <div className="flex flex-col h-full max-w-4xl mx-auto">
-      <QuickQuestionBar
-        questions={quickQuestions}
-        onQuestionClick={handleQuickClick}
-        disabled={isLoading}
-      />
+  const isEmpty = messages.length === 0 && !isLoading;
 
-      <MessageList messages={messages} isLoading={isLoading} />
+  return (
+    <div className="flex flex-col h-full max-w-3xl mx-auto">
+      {/* 空对话状态：居中展示品牌信息 + 快捷提问卡片 */}
+      {isEmpty ? (
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <div className="size-16 mb-5 rounded-2xl bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center shadow-xl shadow-primary/25">
+            <Bot className="size-8 text-primary-foreground" />
+          </div>
+          <h2 className="text-2xl font-semibold text-foreground mb-2">
+            您好，我是 AI 扫地机智能客服
+          </h2>
+          <p className="text-sm text-muted-foreground mb-8 text-center max-w-md">
+            专为扫地机器人打造的智能助手，有问题尽管问我，也可以点击下方快捷提问快速开始
+          </p>
+          <QuickQuestionBar
+            questions={quickQuestions}
+            onQuestionClick={handleQuickClick}
+            disabled={isLoading}
+            variant="card"
+          />
+        </div>
+      ) : (
+        <>
+          {!isEmpty && quickQuestions.length > 0 && messages.length <= 2 && (
+            <QuickQuestionBar
+              questions={quickQuestions}
+              onQuestionClick={handleQuickClick}
+              disabled={isLoading}
+            />
+          )}
+          <MessageList messages={messages} isLoading={isLoading} />
+        </>
+      )}
 
       <div ref={messagesEndRef} />
 
-      <div className="mt-4 glass rounded-2xl p-4">
-        <div className="flex gap-3 items-end">
-          <Textarea
-            ref={textareaRef}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="请输入您的问题，Enter发送，Shift+Enter换行..."
-            className="min-h-[60px] max-h-[200px] resize-none bg-transparent border-white/10 focus:border-primary/50 text-foreground placeholder:text-muted-foreground"
-            rows={2}
-          />
-          <Button
-            onClick={() => handleSend(inputValue)}
-            disabled={isLoading || !inputValue.trim()}
-            className="h-[60px] px-6 bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-          >
-            {isLoading ? (
-              <Loader2 className="size-5 animate-spin" />
-            ) : (
-              <Send className="size-5" />
-            )}
-          </Button>
+      {/* 悬浮输入区：参考豆包的圆角胶囊设计 */}
+      <div className="sticky bottom-0 pt-4">
+        <div className="glass rounded-2xl p-3 shadow-lg shadow-black/10">
+          <div className="flex gap-2 items-end">
+            <Textarea
+              ref={textareaRef}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="请输入您的问题，Enter 发送，Shift+Enter 换行..."
+              className="min-h-[44px] max-h-[200px] resize-none bg-transparent border-0 focus-visible:ring-0 text-foreground placeholder:text-muted-foreground px-2"
+              rows={1}
+            />
+            <Button
+              onClick={() => handleSend(inputValue)}
+              disabled={isLoading || !inputValue.trim()}
+              size="icon"
+              className="size-10 shrink-0 rounded-xl bg-gradient-to-br from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 disabled:opacity-40"
+            >
+              {isLoading ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Send className="size-4" />
+              )}
+            </Button>
+          </div>
+          <p className="text-[11px] text-muted-foreground mt-1.5 text-center">
+            AI 回复仅供参考，如有疑问请联系人工客服
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground mt-2 text-center">
-          AI 回复仅供参考，如有疑问请联系人工客服
-        </p>
       </div>
     </div>
   );

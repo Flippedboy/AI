@@ -169,7 +169,7 @@ const KnowledgePage = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div className="relative w-80">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />

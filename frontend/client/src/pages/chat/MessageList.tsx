@@ -13,7 +13,7 @@ const formatTime = (dateStr: string) => {
   return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
 };
 
-const MessageList = ({ messages, isLoading }: MessageListProps) => {
+const MessageList = ({ messages }: MessageListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,28 +21,12 @@ const MessageList = ({ messages, isLoading }: MessageListProps) => {
       top: listRef.current.scrollHeight,
       behavior: 'smooth',
     });
-  }, [messages, isLoading]);
-
-  if (messages.length === 0 && !isLoading) {
-    return (
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-center">
-          <div className="size-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-            <Bot className="size-8 text-primary" />
-          </div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">智扫通智能客服</h3>
-          <p className="text-sm text-muted-foreground">
-            您好！我是扫地机器人专属客服，有什么可以帮您的？
-          </p>
-        </div>
-      </div>
-    );
-  }
+  }, [messages]);
 
   return (
     <div
       ref={listRef}
-      className="flex-1 overflow-y-auto space-y-4 pr-2 scroll-smooth"
+      className="flex-1 overflow-y-auto space-y-5 pr-1 scroll-smooth"
       style={{ scrollbarWidth: 'thin' }}
     >
       {messages.map((msg, index) => (
@@ -51,11 +35,11 @@ const MessageList = ({ messages, isLoading }: MessageListProps) => {
           className={`flex gap-3 ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
           style={{
             animation: 'slideInUp 0.3s ease-out',
-            animationDelay: `${index * 0.02}s`,
+            animationDelay: `${Math.min(index, 5) * 0.02}s`,
             animationFillMode: 'both',
           }}
         >
-          <Avatar className="size-8 shrink-0">
+          <Avatar className="size-8 shrink-0 mt-0.5">
             <AvatarFallback
               className={
                 msg.type === 'ai'
@@ -67,28 +51,26 @@ const MessageList = ({ messages, isLoading }: MessageListProps) => {
             </AvatarFallback>
           </Avatar>
 
-          <div className={`flex flex-col gap-1 max-w-[75%] ${msg.type === 'user' ? 'items-end' : 'items-start'}`}>
+          <div className={`flex flex-col gap-1 max-w-[78%] ${msg.type === 'user' ? 'items-end' : 'items-start'}`}>
             <div
-              className={`px-4 py-3 rounded-2xl ${
+              className={`px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words ${
                 msg.type === 'ai'
-                  ? 'bg-gradient-to-br from-primary/80 to-blue-600/60 text-white rounded-tl-sm'
-                  : 'bg-card text-foreground rounded-tr-sm border border-white/10'
+                  ? 'bg-card text-card-foreground rounded-2xl rounded-tl-sm border border-white/5 shadow-sm'
+                  : 'bg-gradient-to-br from-primary to-blue-500 text-white rounded-2xl rounded-tr-sm shadow-md shadow-primary/20'
               }`}
             >
-              <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
-                {msg.content || (
-                  <span className="inline-flex gap-1">
-                    <span className="size-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="size-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="size-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </span>
-                )}
-                {msg.type === 'ai' && isLoading && index === messages.length - 1 && msg.content && (
-                  <span className="inline-block w-0.5 h-4 bg-white/80 ml-1 align-middle animate-pulse" />
-                )}
-              </p>
+              {msg.content || (
+                <span className="inline-flex gap-1 py-1">
+                  <span className="size-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="size-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="size-2 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </span>
+              )}
+              {msg.type === 'ai' && msg.content && (
+                <span className="inline-block w-0.5 h-4 bg-primary/60 ml-0.5 align-middle animate-pulse" />
+              )}
             </div>
-            <span className="text-xs text-muted-foreground px-1">
+            <span className="text-[11px] text-muted-foreground px-1">
               {formatTime(msg.createdAt)}
             </span>
           </div>
