@@ -56,12 +56,12 @@ const MetricCard = ({ title, value, suffix, growth, icon, color, isTime }: Metri
   const isPositive = growth >= 0;
 
   return (
-    <div className="glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
+    <div className="glass tech-card rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30">
       <div className="flex items-start justify-between mb-4">
-        <div className={`size-10 rounded-lg bg-gradient-to-br ${colorMap[color]} flex items-center justify-center`}>
+        <div className={`size-10 rounded-lg bg-gradient-to-br ${colorMap[color]} flex items-center justify-center shadow-sm`}>
           {icon}
         </div>
-        <div className={`flex items-center gap-1 text-xs ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+        <div className={`flex items-center gap-1 text-xs font-mono ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
           {isPositive ? (
             <TrendingUp className="size-3" />
           ) : (
@@ -70,7 +70,7 @@ const MetricCard = ({ title, value, suffix, growth, icon, color, isTime }: Metri
           <span>{Math.abs(growth)}%</span>
         </div>
       </div>
-      <div className="text-3xl font-bold text-foreground mb-1">
+      <div className="text-3xl font-bold text-foreground mb-1 tabular-nums tracking-tight">
         {formatValue(displayValue)}
         <span className="text-sm font-normal text-muted-foreground ml-1">{suffix}</span>
       </div>

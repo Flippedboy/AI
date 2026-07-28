@@ -182,4 +182,119 @@
   .bg-gradient-ai {
     background: linear-gradient(135deg, hsl(217 91% 50% / 0.8), hsl(217 91% 65% / 0.6));
   }
+
+  /* 科技感：侧边栏渐变与微光 */
+  .tech-sidebar {
+    background-image:
+      radial-gradient(circle at 20% 0%, hsl(217 91% 60% / 0.08), transparent 50%),
+      radial-gradient(circle at 100% 100%, hsl(190 70% 55% / 0.05), transparent 50%);
+    position: relative;
+  }
+
+  .tech-sidebar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(hsl(215 30% 35% / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(215 30% 35% / 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%);
+    opacity: 0.5;
+  }
+
+  /* 科技感：页面背景网格与渐变 */
+  .tech-page-bg {
+    position: relative;
+    background-image:
+      radial-gradient(circle at 0% 0%, hsl(217 91% 60% / 0.05), transparent 40%),
+      radial-gradient(circle at 100% 100%, hsl(190 70% 55% / 0.04), transparent 40%);
+  }
+
+  .tech-page-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(hsl(215 30% 50% / 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(215 30% 50% / 0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  /* 科技感：卡片高光描边 */
+  .tech-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tech-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(217 91% 70% / 0.5), transparent);
+    opacity: 0.6;
+  }
+
+  /* 科技感：流式输出光标 */
+  .stream-cursor::after {
+    content: "▍";
+    display: inline-block;
+    margin-left: 1px;
+    color: var(--primary);
+    animation: stream-blink 1s steps(2) infinite;
+    transform: translateY(-1px);
+  }
+
+  @keyframes stream-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* 流式加载点 */
+  .stream-dots span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 2px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: stream-dot 1.2s ease-in-out infinite;
+  }
+  .stream-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .stream-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes stream-dot {
+    0%, 80%, 100% { opacity: 0.4; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* 科技感：脉冲发光 */
+  .tech-glow {
+    box-shadow:
+      0 0 0 1px hsl(217 91% 60% / 0.2),
+      0 0 20px hsl(217 91% 60% / 0.15);
+  }
+
+  /* 自定义滚动条 */
+  .tech-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .tech-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .tech-scroll::-webkit-scrollbar-thumb {
+    background: hsl(215 30% 50% / 0.3);
+    border-radius: 3px;
+  }
+  .tech-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(217 91% 60% / 0.5);
+  }
 }

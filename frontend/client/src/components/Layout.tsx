@@ -6,6 +6,7 @@ import {
   FileText,
   Settings,
   Bot,
+  Sparkles,
 } from "lucide-react";
 import {
   SidebarProvider,
@@ -41,18 +42,23 @@ const LayoutContent = () => {
 
   return (
     <>
-      <Sidebar collapsible="icon" className="border-r border-sidebar-border/60">
+      <Sidebar collapsible="icon" className="border-r border-sidebar-border/60 tech-sidebar">
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" asChild className="data-[slot=menu-button]:p-2">
                 <Link to="/">
-                  <div className="flex aspect-square size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-blue-500 text-primary-foreground shadow-lg shadow-primary/20">
-                    <Bot className="size-5" />
+                  <div className="relative flex aspect-square size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-blue-500 to-cyan-400 text-primary-foreground shadow-lg shadow-primary/30 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-60" />
+                    <Bot className="size-5 relative z-10" />
+                    <span className="absolute inset-0 rounded-xl ring-1 ring-white/20" />
                   </div>
                   <div className="flex flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
-                    <span className="font-semibold text-foreground">AI扫地机智能客服</span>
-                    <span className="text-xs text-muted-foreground">智能客服系统</span>
+                    <span className="font-semibold text-foreground tracking-tight">AI扫地机智能客服</span>
+                    <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Sparkles className="size-2.5 text-primary/70" />
+                      智能客服系统
+                    </span>
                   </div>
                 </Link>
               </SidebarMenuButton>
@@ -61,7 +67,7 @@ const LayoutContent = () => {
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel className="text-xs font-medium tracking-wide uppercase">
+            <SidebarGroupLabel className="text-xs font-medium tracking-widest uppercase text-muted-foreground/70">
               功能导航
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -73,10 +79,30 @@ const LayoutContent = () => {
                       : pathname.startsWith(item.path);
                   return (
                     <SidebarMenuItem key={item.path}>
-                      <SidebarMenuButton asChild isActive={isActive} tooltip={item.label} className="h-10">
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive}
+                        tooltip={item.label}
+                        className="h-10 relative group/nav"
+                      >
                         <Link to={item.path}>
-                          <item.icon className="size-4" />
-                          <span>{item.label}</span>
+                          <span
+                            className={`absolute left-0 top-1/2 -translate-y-1/2 h-5 w-0.5 rounded-r-full bg-gradient-to-b from-primary to-cyan-400 transition-all duration-300 ${
+                              isActive
+                                ? "opacity-100 scale-100 shadow-[0_0_8px_var(--primary)]"
+                                : "opacity-0 scale-50"
+                            } group-data-[collapsible=icon]:hidden`}
+                          />
+                          <item.icon
+                            className={`size-4 transition-all duration-300 ${
+                              isActive
+                                ? "text-primary drop-shadow-[0_0_6px_var(--primary)]"
+                                : "text-muted-foreground group-hover/nav:text-foreground"
+                            }`}
+                          />
+                          <span className={isActive ? "text-foreground font-medium" : ""}>
+                            {item.label}
+                          </span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -89,8 +115,11 @@ const LayoutContent = () => {
         <SidebarFooter>
           <div className="px-3 py-2 text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
             <div className="flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-success animate-pulse" />
-              <span>v1.0.0 · RAG Agent</span>
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-success" />
+              </span>
+              <span className="font-mono">v1.0.0 · RAG Agent</span>
             </div>
           </div>
         </SidebarFooter>
@@ -100,15 +129,21 @@ const LayoutContent = () => {
           <SidebarTrigger className="size-9 rounded-lg hover:bg-accent transition-colors" />
           <Separator orientation="vertical" className="!h-5 bg-border/60" />
           <div className="flex items-center gap-2">
-            <h1 className="text-base font-semibold text-foreground">{activeTitle}</h1>
+            <h1 className="text-base font-semibold text-foreground tracking-tight">
+              {activeTitle}
+            </h1>
             {activeItem && (
               <span className="hidden sm:inline text-xs text-muted-foreground">
                 · {activeItem.desc}
               </span>
             )}
           </div>
+          <div className="ml-auto hidden md:flex items-center gap-2 text-xs text-muted-foreground/70 font-mono">
+            <span className="size-1.5 rounded-full bg-primary/60 animate-pulse" />
+            <span>System Online</span>
+          </div>
         </header>
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 tech-page-bg">
           <Outlet />
         </div>
       </SidebarInset>

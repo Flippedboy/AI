@@ -124,7 +124,7 @@ const ReportPage = () => {
 
   return (
     <div className="flex flex-col h-full max-w-5xl mx-auto">
-      <div className="glass rounded-xl p-5 mb-6">
+      <div className="glass tech-card rounded-xl p-5 mb-6">
         <div className="flex flex-wrap items-end gap-4">
           <div className="flex flex-col gap-2">
             <label className="text-sm text-muted-foreground">选择用户</label>
@@ -184,17 +184,23 @@ const ReportPage = () => {
 
       <div className="flex-1 overflow-auto">
         {isGenerating && !currentReport && (
-          <div className="glass rounded-xl p-12 flex flex-col items-center justify-center">
-            <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 animate-pulse">
-              <FileText className="size-8 text-primary" />
+          <div className="glass tech-card rounded-xl p-12 flex flex-col items-center justify-center">
+            <div className="relative size-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 animate-pulse">
+              <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl animate-pulse" />
+              <FileText className="size-8 text-primary relative z-10" />
             </div>
             <h3 className="text-lg font-medium text-foreground mb-2">正在生成报告</h3>
             <p className="text-sm text-muted-foreground">AI 正在分析用户使用数据，请稍候...</p>
+            <div className="mt-4 stream-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         )}
 
         {!isGenerating && !currentReport && (
-          <div className="glass rounded-xl p-12 flex flex-col items-center justify-center">
+          <div className="glass tech-card rounded-xl p-12 flex flex-col items-center justify-center">
             <div className="size-16 rounded-full bg-muted/30 flex items-center justify-center mb-4">
               <FileText className="size-8 text-muted-foreground" />
             </div>
@@ -204,7 +210,7 @@ const ReportPage = () => {
         )}
 
         {currentReport && currentReport.status === 'failed' && (
-          <div className="glass rounded-xl p-12 flex flex-col items-center justify-center">
+          <div className="glass tech-card rounded-xl p-12 flex flex-col items-center justify-center">
             <div className="size-16 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
               <AlertCircle className="size-8 text-red-400" />
             </div>

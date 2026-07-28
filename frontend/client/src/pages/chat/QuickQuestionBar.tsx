@@ -22,18 +22,22 @@ const QuickQuestionBar = ({
     return (
       <div className="w-full max-w-2xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {questions.map((q) => (
+          {questions.map((q, idx) => (
             <button
               key={q.id}
               onClick={() => onQuestionClick(q.content)}
               disabled={disabled}
-              className="group flex items-center gap-3 glass rounded-xl p-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 disabled:opacity-50 disabled:hover:translate-y-0"
+              className="group relative flex items-center gap-3 glass tech-card rounded-xl p-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/15 disabled:opacity-50 disabled:hover:translate-y-0 overflow-hidden"
+              style={{ animationDelay: `${idx * 0.05}s` }}
             >
-              <div className="size-8 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary transition-colors group-hover:bg-primary/20">
+              <div className="size-8 shrink-0 rounded-lg bg-gradient-to-br from-primary/20 to-cyan-400/10 flex items-center justify-center text-primary transition-all group-hover:from-primary/30 group-hover:to-cyan-400/20 group-hover:scale-110">
                 <Zap className="size-4" />
               </div>
               <span className="text-sm text-foreground/90 group-hover:text-foreground line-clamp-2">
                 {q.content}
+              </span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2 transition-all duration-300 text-primary">
+                →
               </span>
             </button>
           ))}

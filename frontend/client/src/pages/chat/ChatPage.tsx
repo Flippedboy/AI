@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Send, Bot, Loader2 } from 'lucide-react';
+import { Send, Bot, Loader2, Sparkles } from 'lucide-react';
 import { logger } from '@/utils/logger';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -17,6 +17,7 @@ const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [quickQuestions, setQuickQuestions] = useState<QuickQuestion[]>([]);
   const [sessionId, setSessionId] = useState('');
+  const [streamingId, setStreamingId] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -95,6 +96,7 @@ const ChatPage = () => {
       createdAt: new Date().toISOString(),
     };
     setMessages((prev) => [...prev, aiMsg]);
+    setStreamingId(aiMsgId);
 
     const startTime = Date.now();
     let fullContent = '';
@@ -142,6 +144,7 @@ const ChatPage = () => {
       );
     } finally {
       setIsLoading(false);
+      setStreamingId('');
     }
   }, [isLoading, sessionId]);
 
@@ -163,14 +166,19 @@ const ChatPage = () => {
       {/* 空对话状态：居中展示品牌信息 + 快捷提问卡片 */}
       {isEmpty ? (
         <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="size-16 mb-5 rounded-2xl bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center shadow-xl shadow-primary/25">
-            <Bot className="size-8 text-primary-foreground" />
+          <div className="relative mb-5">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-cyan-400 blur-2xl opacity-50 animate-pulse" />
+            <div className="relative size-16 rounded-2xl bg-gradient-to-br from-primary via-blue-500 to-cyan-400 flex items-center justify-center shadow-xl shadow-primary/30">
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-2xl" />
+              <Bot className="size-8 text-primary-foreground relative z-10" />
+            </div>
           </div>
-          <h2 className="text-2xl font-semibold text-foreground mb-2">
-            您好，我是 AI 扫地机智能客服
+          <h2 className="text-2xl font-semibold text-foreground mb-2 tracking-tight">
+            您好，我是 <span className="text-gradient">AI 扫地机智能客服</span>
           </h2>
-          <p className="text-sm text-muted-foreground mb-8 text-center max-w-md">
-            专为扫地机器人打造的智能助手，有问题尽管问我，也可以点击下方快捷提问快速开始
+          <p className="text-sm text-muted-foreground mb-8 text-center max-w-md flex items-center gap-1.5 justify-center">
+            <Sparkles className="size-3.5 text-primary/70" />
+            专为扫地机器人打造的智能助手，支持流式输出
           </p>
           <QuickQuestionBar
             questions={quickQuestions}
@@ -188,7 +196,11 @@ const ChatPage = () => {
               disabled={isLoading}
             />
           )}
-          <MessageList messages={messages} isLoading={isLoading} />
+          <MessageList
+            messages={messages}
+            isLoading={isLoading}
+            streamingId={streamingId}
+          />
         </>
       )}
 
@@ -196,7 +208,7 @@ const ChatPage = () => {
 
       {/* 悬浮输入区：参考豆包的圆角胶囊设计 */}
       <div className="sticky bottom-0 pt-4">
-        <div className="glass rounded-2xl p-3 shadow-lg shadow-black/10">
+        <div className="glass tech-card rounded-2xl p-3 shadow-lg shadow-black/20">
           <div className="flex gap-2 items-end">
             <Textarea
               ref={textareaRef}
@@ -211,7 +223,7 @@ const ChatPage = () => {
               onClick={() => handleSend(inputValue)}
               disabled={isLoading || !inputValue.trim()}
               size="icon"
-              className="size-10 shrink-0 rounded-xl bg-gradient-to-br from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 disabled:opacity-40"
+              className="size-10 shrink-0 rounded-xl bg-gradient-to-br from-primary via-blue-500 to-cyan-400 hover:from-primary/90 hover:to-blue-500/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/40 disabled:opacity-40"
             >
               {isLoading ? (
                 <Loader2 className="size-4 animate-spin" />

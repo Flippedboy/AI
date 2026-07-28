@@ -233,26 +233,29 @@ const DashboardPage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="glass rounded-xl p-5">
+        <div className="glass tech-card rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-foreground">对话趋势</h3>
-            <div className="flex gap-1">
+            <h3 className="font-semibold text-foreground flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+              对话趋势
+            </h3>
+            <div className="flex gap-1 p-0.5 rounded-md bg-muted/30">
               <button
                 onClick={() => setTrendDimension('day')}
-                className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                className={`px-3 py-1 text-xs rounded-md transition-all ${
                   trendDimension === 'day'
-                    ? 'bg-primary text-white'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    ? 'bg-gradient-to-r from-primary to-blue-500 text-white shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 日
               </button>
               <button
                 onClick={() => setTrendDimension('week')}
-                className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                className={`px-3 py-1 text-xs rounded-md transition-all ${
                   trendDimension === 'week'
-                    ? 'bg-primary text-white'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    ? 'bg-gradient-to-r from-primary to-blue-500 text-white shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 周
@@ -262,14 +265,20 @@ const DashboardPage = () => {
           <ReactECharts option={lineOption} theme="dark" className="h-[300px]" />
         </div>
 
-        <div className="glass rounded-xl p-5">
-          <h3 className="font-semibold text-foreground mb-4">热门问题 Top10</h3>
+        <div className="glass tech-card rounded-xl p-5">
+          <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            热门问题 Top10
+          </h3>
           <ReactECharts option={barOption} theme="dark" className="h-[300px]" />
         </div>
       </div>
 
-      <div className="glass rounded-xl p-5">
-        <h3 className="font-semibold text-foreground mb-4">知识库引用分布</h3>
+      <div className="glass tech-card rounded-xl p-5">
+        <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+          <span className="size-1.5 rounded-full bg-purple-400 animate-pulse" />
+          知识库引用分布
+        </h3>
         <ReactECharts option={pieOption} theme="dark" className="h-[320px]" />
       </div>
     </div>

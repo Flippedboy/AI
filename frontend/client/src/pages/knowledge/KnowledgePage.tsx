@@ -226,18 +226,18 @@ const KnowledgePage = () => {
       )}
 
       {status && (
-        <div className="mt-6 glass rounded-xl p-4 flex items-center justify-between">
-          <div className="flex items-center gap-6">
+        <div className="mt-6 glass tech-card rounded-xl p-4 flex items-center justify-between">
+          <div className="flex items-center gap-6 flex-wrap">
             <div className="flex items-center gap-2">
               <Database className="size-4 text-primary" />
               <span className="text-sm text-muted-foreground">
-                向量库：<span className="text-foreground font-medium">{status.totalDocs}</span> 篇文档
+                向量库：<span className="text-foreground font-medium font-mono">{status.totalDocs}</span> 篇文档
               </span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="size-4 text-success" />
               <span className="text-sm text-muted-foreground">
-                索引成功率：<span className="text-foreground font-medium">{status.indexSuccessRate}%</span>
+                索引成功率：<span className="text-foreground font-medium font-mono">{status.indexSuccessRate}%</span>
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -247,7 +247,7 @@ const KnowledgePage = () => {
               </span>
             </div>
           </div>
-          <Badge variant="outline" className="border-primary/30 text-primary">
+          <Badge variant="outline" className="border-primary/30 text-primary font-mono">
             共 {total} 个文件
           </Badge>
         </div>

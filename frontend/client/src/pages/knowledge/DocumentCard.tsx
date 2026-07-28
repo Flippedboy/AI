@@ -30,12 +30,12 @@ const DocumentCard = ({ doc, formatFileSize, formatDate, onDelete }: DocumentCar
 
   return (
     <div
-      className="glass rounded-xl p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 hover:border-white/20 group relative"
+      className="glass tech-card rounded-xl p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/15 hover:border-primary/30 group relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex items-start justify-between mb-3">
-        <div className="size-12 rounded-lg bg-card flex items-center justify-center border border-white/5">
+        <div className="size-12 rounded-lg bg-gradient-to-br from-card to-muted/30 flex items-center justify-center border border-white/5 shadow-sm">
           {typeIcons[doc.type] || <BookOpen className="size-6 text-muted-foreground" />}
         </div>
         <Button
@@ -58,17 +58,17 @@ const DocumentCard = ({ doc, formatFileSize, formatDate, onDelete }: DocumentCar
         <Badge variant="outline" className={`text-xs ${status.className}`}>
           {status.label}
         </Badge>
-        <span className="text-xs text-muted-foreground uppercase">{doc.type}</span>
+        <span className="text-xs text-muted-foreground uppercase font-mono">{doc.type}</span>
       </div>
 
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
+      <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
         <span>{formatFileSize(doc.size)}</span>
         <span>{formatDate(doc.createdAt)}</span>
       </div>
 
       <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
         <span className="text-xs text-muted-foreground">
-          引用 <span className="text-foreground">{doc.quoteCount}</span> 次
+          引用 <span className="text-foreground font-mono font-medium">{doc.quoteCount}</span> 次
         </span>
       </div>
     </div>

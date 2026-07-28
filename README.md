@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # 智扫通 · RAG-Agent 智能客服系统
 
@@ -232,6 +232,26 @@ import type { ChatMessage, DashboardMetrics } from '@shared/api.interface';
 3. 检查前端依赖 - 缺失时自动 npm install
 4. 启动前端 - Vite 开发服务器 (端口 8080)
 
+### 跨平台 Node 启动器（推荐）
+
+`start.js` 是一个基于 Node.js 的跨平台启动脚本，可在 Windows / macOS / Linux 上一致运行，自动并行启动前后端并将日志按颜色前缀统一输出：
+
+```bash
+node start.js              # 同时启动前后端
+node start.js --backend    # 仅启动后端
+node start.js --frontend   # 仅启动前端
+node start.js --no-install # 跳过前端依赖安装
+```
+
+脚本执行流程：
+
+1. 检测运行环境 - Python、Node.js 版本检查
+2. 启动后端 - FastAPI 服务器 (端口 8000)
+3. 检查前端依赖 - 缺失时自动 npm install
+4. 启动前端 - Vite 开发服务器 (端口 8080)
+
+按 `Ctrl+C` 退出，脚本会自动关闭前后端进程。
+
 ### 手动启动
 
 ```bash
@@ -329,6 +349,7 @@ AI/
 +-- docs/screenshots/              # 截图目录（请自行截图替换）
 +-- start.bat                      # Windows 一键启动脚本
 +-- start.ps1                      # PowerShell 启动脚本
++-- start.js                       # 跨平台 Node.js 启动脚本（推荐）
 +-- README.md                      # 项目说明文档
 ```
 

@@ -118,9 +118,9 @@ const SettingsPage = () => {
         <div className="fixed inset-0 bg-background/50 backdrop-blur-sm z-50 pointer-events-none transition-opacity duration-300" />
       )}
 
-      <div className="glass rounded-xl p-6">
+      <div className="glass tech-card rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="size-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center">
+          <div className="size-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center border border-blue-500/20">
             <Cpu className="size-5 text-blue-400" />
           </div>
           <div>
@@ -178,9 +178,9 @@ const SettingsPage = () => {
         </div>
       </div>
 
-      <div className="glass rounded-xl p-6">
+      <div className="glass tech-card rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="size-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center">
+          <div className="size-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center border border-purple-500/20">
             <BookOpen className="size-5 text-purple-400" />
           </div>
           <div>
@@ -223,9 +223,9 @@ const SettingsPage = () => {
         </div>
       </div>
 
-      <div className="glass rounded-xl p-6">
+      <div className="glass tech-card rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="size-10 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center">
+          <div className="size-10 rounded-lg bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center border border-green-500/20">
             <Palette className="size-5 text-green-400" />
           </div>
           <div>
