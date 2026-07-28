@@ -23,7 +23,13 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
+import DockSwitcher from "./DockSwitcher";
 
 const navItems = [
   { path: "/", label: "智能对话", icon: MessageSquare, desc: "AI 在线问答" },
@@ -125,15 +131,30 @@ const LayoutContent = () => {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b border-border/40 bg-background/80 px-6 backdrop-blur-xl">
-          <SidebarTrigger className="size-9 rounded-lg hover:bg-accent transition-colors" />
-          <Separator orientation="vertical" className="!h-5 bg-border/60" />
-          <div className="flex items-center gap-2">
-            <h1 className="text-base font-semibold text-foreground tracking-tight">
+        <header className="sticky top-0 z-10 flex h-16 items-center gap-2 border-b border-border/40 bg-background/80 px-4 backdrop-blur-xl">
+          {/* 豆包风格：圆角图标按钮，hover 时上浮 + 发光 */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <SidebarTrigger
+                className={cnTrigger}
+              />
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="font-medium">
+              切换侧边栏
+            </TooltipContent>
+          </Tooltip>
+
+          {/* 豆包风格：功能切换器（应用网格按钮） */}
+          <DockSwitcher />
+
+          <Separator orientation="vertical" className="!h-5 bg-border/60 mx-1" />
+
+          <div className="flex items-center gap-2 min-w-0">
+            <h1 className="text-base font-semibold text-foreground tracking-tight truncate">
               {activeTitle}
             </h1>
             {activeItem && (
-              <span className="hidden sm:inline text-xs text-muted-foreground">
+              <span className="hidden sm:inline text-xs text-muted-foreground shrink-0">
                 · {activeItem.desc}
               </span>
             )}
@@ -150,6 +171,10 @@ const LayoutContent = () => {
     </>
   );
 };
+
+// 豆包风格 SidebarTrigger 样式
+const cnTrigger =
+  "size-9 rounded-xl border border-border/60 bg-card/40 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-primary/10 hover:shadow-md hover:shadow-primary/20 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-primary/40";
 
 const Layout = () => (
   <SidebarProvider defaultOpen={true}>
