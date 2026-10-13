@@ -29,7 +29,7 @@ def get_user_id() -> str:
     return random.choice(user_ids)
 
 @tool(description="获取当前月份")
-def get_current_moth() -> str:
+def get_current_month() -> str:
     return random.choice(month_arr)
 
 def generate_external_data():

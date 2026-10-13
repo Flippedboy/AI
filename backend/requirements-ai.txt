@@ -1,0 +1,7 @@
+# 可选 AI 依赖：仅在启用真实 RAG / ReAct Agent 时安装。
+# 安装方式：pip install -r requirements.txt -r requirements-ai.txt
+# 未安装时 api_server 自动降级为 Mock 模式，仍可完整演示前端功能。
+langchain>=0.3.0,<1.0.0
+langchain-community>=0.3.0,<1.0.0
+dashscope>=1.20.0,<2.0.0
+chromadb>=0.6.0,<1.0.0

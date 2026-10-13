@@ -28,9 +28,19 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# CORS 白名单：默认仅允许本地开发前端；生产部署时通过环境变量 CORS_ORIGINS 覆盖，
+# 多个来源用逗号分隔。注意：allow_credentials=True 时 allow_origins 不能为 "*"。
+_cors_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:8080,http://127.0.0.1:8080,http://localhost:5173,http://127.0.0.1:5173",
+    ).split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -21,14 +21,15 @@ def get_file_md5_hex(filepath:str):
             while chunk := f.read(chunk_size):
                 md5_obj.update(chunk)
     except Exception as e:
-        logger.error(f"计算文件{filepath}MD5失败",{str(e)})
+        logger.error(f"计算文件{filepath}MD5失败，原因：{str(e)}")
         return None
+    return md5_obj.hexdigest()
 def listdir_with_allowed_type(path:str, allowed_types:tuple[str]):
     """返回文件夹的列表（允许的文件类型）"""
     files = []
     if not os.path.isdir(path):
         logger.error(f"[listdir_with_allowed_type]{path}不是文件夹")
-        return allowed_types
+        return tuple(files)
     for f in os.listdir(path):
         if f.endswith(allowed_types):
             files.append(os.path.join(path,f))

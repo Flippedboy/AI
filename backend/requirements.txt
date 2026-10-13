@@ -2,9 +2,6 @@
 uvicorn>=0.30.0,<1.0.0
 pydantic>=2.0.0,<3.0.0
 python-multipart>=0.0.9
-# AI dependencies (optional - only for AI agent functionality)
-# langchain>=0.3.0,<1.0.0
-# langchain-community>=0.3.0,<1.0.0
-# dashscope>=1.20.0,<2.0.0
-# chromadb>=0.6.0,<1.0.0
+# AI dependencies are optional, see requirements-ai.txt (install with -r requirements-ai.txt
+# only when you want real RAG / ReAct Agent; otherwise the server falls back to Mock mode).
 
